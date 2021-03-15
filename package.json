@@ -3,19 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rjsf/material-ui": "^2.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "arweave": "1.4.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-scripts": "4.0.3"
+  },
+  "devDependencies": {
+    "arweave-deploy": "1.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "savekey": "npx arweave key-save ./arweave-keyfile.json",
+    "deploy": "npm run build && npx arweave deploy ./build/index.html --package",
+    "testpack": "npm run build && npx arweave package ./build/index.html output/index.html",
+    "serve": "npm run testpack && npx serve -s output"
   },
   "eslintConfig": {
     "extends": [
