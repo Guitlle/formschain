@@ -1,136 +1,77 @@
 import React from 'react';
-import Form from "@rjsf/material-ui";
-import './App.css';
+import Editor from './Editor';
+import './App.css'
+import {
+  HashRouter,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import {withStyles} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle'
 
-let schema = {
-  "title": "Create a Form",
-  "type": "object",
-  "description": "This tool lets you define a form. Edit your form below and hit submit when ready. This will store the form specification in your Arweave profile and generate a share link so others can fill the form and send you their response.",
-  "required": ["title"],
-  "properties": {
-    "title": {"type": "string", "title": "Form title", "default": ""},
-    "description": {"type": "string", "title": "Form description", "default": ""},
-    "sections": {
-      "type": "array",
-      "title": "Sections",
-      "items": {
-        "type": "object",
-        "required": [
-          "title"
-        ],
-        "properties": {
-          "title": {
-            "type": "string",
-            "title": "Section Title"
-          },
-          "fields": {
-            "type": "array",
-            "title": "Fields for this section",
-            "items": {
-              "type": "object",
-              "anyOf": [
-                {
-                  "title": "Text field",
-                  "properties": {
-                    "title": {
-                      "type": "string",
-                      "title": "Field name",
-                    },
-                    "placeholder": {
-                      "type": "string",
-                    },
-                    "type" : {
-                      "type": "string", "default": "string"
-                    }
-                  }
-                },
-                {
-                  "title": "Number field",
-                  "properties": {
-                    "title": {
-                      "type": "string",
-                      "title": "Field name",
-                    },
-                    "placeholder": {
-                      "type": "string",
-                    },
-                    "type" : {
-                      "type": "string", "default": "number"
-                    }
-                  }
-                },
-                {
-                  "title": "Date field",
-                  "properties": {
-                    "title": {
-                      "type": "string",
-                      "title": "Field name",
-                    },
-                    "placeholder": {
-                      "type": "string",
-                    },
-                    "type" : {
-                      "type": "string", "default": "string"
-                    },
-                    "format" : {
-                      "type": "string", "default": "date"
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    }
-  }
-};
+const BarButton = withStyles({
+  root: {
+    color: 'inherit',
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
 
-let uiSchema = {
-  title: {
-    
-  },
-  description: {
-      "ui:widget": "textarea",
-      "ui:options": {
-        "rows": 5
-      }
-  },
-  "sections": {
-    "items": {
-      "fields": {
-        "items": {
-          "type": {
-            "ui:widget": "hidden"
-          },
-          "format": {
-            "ui:widget": "hidden"
-          }
-        }
-      }
-    }
   }
-};
+})(Button);
 
 class App extends React.Component {
-  submitData (form) {
-    console.log(form);
-  }
-  
-  errorHandler (form) {
-    console.log(form);
-  }
-  
+
   render () {
     return (
-      <div className="App">
-        <Form 
-          schema={schema}
-          uiSchema={uiSchema}
-          onSubmit={this.submitData}
-          onError={this.errorHandler} 
-        />
-      </div>
+      <HashRouter>
+        <div className="App"
+          style={{
+            flexGrow: 1,
+          }}>
+          <AppBar position="static">
+            <Container maxWidth="md" >
+              <Toolbar>
+
+                <Typography variant="h6"
+                    style={{
+                      flexGrow: 1,
+                    }}>
+                  <Link className="AppBarLink" to='/'>Formschain</Link>
+                </Typography>
+                <Link className="AppBarLink" to='/new'><BarButton >New Form</BarButton></Link>
+                <IconButton
+                  aria-label="account of current user"
+                  color="inherit"
+                >
+                  <AccountCircle />
+                </IconButton>
+
+              </Toolbar>
+            </Container>
+          </AppBar>
+
+          <Container className="MainContainer" maxWidth="md">
+            <Switch>
+              <Route path="/new">
+                <Editor />
+              </Route>
+              <Route path="/">
+                <div class="hero">
+                  <h1>Forms on the blockchain</h1>
+                  <p>
+                    Make surveys on the permaweb, share them and receive responses.
+                  </p>
+                </div>
+              </Route>
+            </Switch>
+          </Container>
+        </div>
+      </HashRouter>
     );
   }
 }
