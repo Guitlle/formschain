@@ -1,5 +1,7 @@
 import React from 'react';
 import Editor from './Editor';
+import Home from './Home';
+import {SessionView} from './ArweaveSession'
 import './App.css'
 import {
   HashRouter,
@@ -8,13 +10,18 @@ import {
   Link
 } from "react-router-dom";
 import {withStyles} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+import {
+  AppBar,
+  Toolbar,
+  Container,
+  Button,
+  Typography,
+  IconButton,
+  Box
+} from '@material-ui/core';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import AccountCircle from '@material-ui/icons/AccountCircle'
+
 
 const BarButton = withStyles({
   root: {
@@ -25,53 +32,79 @@ const BarButton = withStyles({
 })(Button);
 
 class App extends React.Component {
+  state = {
+  }
 
   render () {
     return (
-      <HashRouter>
-        <div className="App"
-          style={{
-            flexGrow: 1,
-          }}>
-          <AppBar position="static">
-            <Container maxWidth="md" >
-              <Toolbar>
+      <Box style={{
+        display: 'flex',
+        minHeight: '100vh',
+        flexDirection: 'column',
+        width: '100%',
+      }}>
+        <HashRouter>
+          <Route path="/session">
+            <SessionView showSession={true} />
+          </Route>
 
-                <Typography variant="h6"
-                    style={{
-                      flexGrow: 1,
-                    }}>
-                  <Link className="AppBarLink" to='/'>Formschain</Link>
-                </Typography>
-                <Link className="AppBarLink" to='/new'><BarButton >New Form</BarButton></Link>
-                <IconButton
-                  aria-label="account of current user"
-                  color="inherit"
-                >
-                  <AccountCircle />
-                </IconButton>
+          <div className="App"
+            style={{
+              flexGrow: 1,
+            }}>
+            <AppBar position="static">
+              <Container maxWidth="md" >
+                <Toolbar>
 
-              </Toolbar>
+                  <Typography variant="h6"
+                      style={{
+                        flexGrow: 1,
+                        color: 'white'
+                      }}>
+                    <Link className="AppBarLink" to='/'>Formschain</Link>
+                  </Typography>
+                  <Link className="AppBarLink" to='/new'><BarButton >New Form</BarButton></Link>
+                  <Link to="/session">
+                    <IconButton
+                        aria-label="account of current user"
+                        color="inherit"
+                      >
+                        <AccountCircle />
+                    </IconButton>
+                  </Link>
+                </Toolbar>
+              </Container>
+            </AppBar>
+
+            <Container className="MainContainer" maxWidth="md">
+                <Route path="/new" exact>
+                  <Editor />
+                </Route>
+                <Route path="/" exact>
+                  <Home />
+                </Route>
             </Container>
-          </AppBar>
-
-          <Container className="MainContainer" maxWidth="md">
-            <Switch>
-              <Route path="/new">
-                <Editor />
-              </Route>
-              <Route path="/">
-                <div class="hero">
-                  <h1>Forms on the blockchain</h1>
-                  <p>
-                    Make surveys on the permaweb, share them and receive responses.
-                  </p>
-                </div>
-              </Route>
-            </Switch>
-          </Container>
-        </div>
-      </HashRouter>
+          </div>
+          <Box className="Footer" justifyContent="flex-end" style={{
+              background: '#110b67',
+              marginTop: '50px',
+              color: 'white'
+            }}>
+            <Container maxWidth="md">
+              <center>
+                Formschain
+                <a href="https://github.com/Guitlle/formschain">
+                  <IconButton
+                    color="inherit"
+                  >
+                    <GitHubIcon />
+                  </IconButton>
+                </a>
+              </center>
+            </Container>
+          </Box>
+        </HashRouter>
+      </Box>
     );
   }
 }

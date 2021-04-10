@@ -1,4 +1,4 @@
-export default {
+const FormSchema = {
   "json_schema": {
     "title": "Create a Form",
     "type": "object",
@@ -108,3 +108,5 @@ export default {
     }
   }
 };
+
+export default FormSchema;

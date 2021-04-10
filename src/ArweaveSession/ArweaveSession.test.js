@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import {ArweaveProvider, arweave, ArweaveContext} from './index.js';
- 
+import {ArweaveProvider, arweave, ArweaveContext} from './Context.js';
+
 test('test arweave login', async () => {
   let key = await arweave.wallets.generate();
   let address = await arweave.wallets.jwkToAddress(key);

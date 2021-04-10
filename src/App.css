@@ -1,6 +1,10 @@
-.AppBarLink {
-  color: white;
+a {
   text-decoration: none;
+  color: inherit;
+}
+
+p {
+  line-height: 1.6em;
 }
 
 .MainContainer {
